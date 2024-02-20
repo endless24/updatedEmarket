@@ -5,7 +5,6 @@ import { ImBin } from "react-icons/im";
 import { Link } from "react-router-dom";
 
 export default function Header({
-  size,
   cart,
   price,
   setCart,
@@ -30,18 +29,18 @@ export default function Header({
             <strong>E-Commerce</strong>
           </div>
           <div className="col-span-1 relative select-none">
-            {size > 0 ? (
+            {cart.length > 0 ? (
               <span className=" cursor-pointer " onClick={toggleSidebar}>
                 <FaShoppingCart className="float-right clear-both text-lg " />
                 <span className="absolute -right-4 -top-4 bg-slate-700 px-2 py-1 rounded-full text-xs">
-                  {size}
+                  {cart.length}
                 </span>
               </span>
             ) : (
               <span className=" cursor-pointer ">
                 <FaShoppingCart className="float-right clear-both text-lg " />
                 <span className="absolute -right-4 -top-4 bg-slate-700 px-2 py-1 rounded-full text-xs">
-                  {size}
+                  {cart.length}
                 </span>
               </span>
             )}
@@ -66,7 +65,7 @@ export default function Header({
             </span>
           </div>
           <div className="p-4  font-bold ">
-            <p className="text-2xl text-center"> Your Cart ({size})</p>
+            <p className="text-2xl text-center"> Your Cart ({cart.length})</p>
             {cart.map((cartItems) => (
               <div
                 className="flex items-center w-full gap-4 my-4"

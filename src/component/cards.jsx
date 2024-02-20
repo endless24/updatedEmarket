@@ -2,7 +2,7 @@ import React from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { productList } from "../productList";
 
-export function Cards({ handleClick }) {
+export function Cards({ handleAddToCart }) {
   return (
     <div className="max-w-6xl mx-auto  py-20 ">
       <div className="grid md:grid-cols-4 gap-7 grid-cols-2">
@@ -24,7 +24,7 @@ export function Cards({ handleClick }) {
               <div className=" flex items-center justify-center rounded-full w-8 h-8 bg-gray-600">
                 <FaShoppingCart
                   className=" clear-both cursor-pointer"
-                  onClick={() => handleClick(productObj)}
+                  onClick={() => handleAddToCart(productObj)}
                 />
               </div>
             </div>

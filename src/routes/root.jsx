@@ -1,8 +1,7 @@
 // import React from "react";
 import { useState, useContext } from "react";
-import Header from "./header";
-import Product from "./product";
-import PaystackIntegration from "./PaystackIntegration";
+import Header from "../component/header";
+import Product from "../component/product";
 // import { Outlet } from "react-router-dom";
 import { CartContext } from "../contexts/CartProvider";
 
@@ -17,7 +16,7 @@ const Root = () => {
     setIsOpen(!isOpen);
   };
   //function that add to cart when clicked
-  const handleClick = (items) => {
+  const handleAddToCart = (items) => {
     let isAdded = false;
     //checking if the item has been added
     //checking if the clicked item is equal to the id of the product
@@ -72,7 +71,6 @@ const Root = () => {
         <Header
           cart={cart}
           setCart={setCart}
-          size={cart.length}
           toggleSidebar={toggleSidebar}
           isOpen={isOpen}
           toggleCheckout={() => {
@@ -86,7 +84,10 @@ const Root = () => {
         />
         {/* <Outlet /> */}
 
-        <Product handleClick={handleClick} toggleSidebar={toggleSidebar} />
+        <Product
+          handleAddToCart={handleAddToCart}
+          toggleSidebar={toggleSidebar}
+        />
         {warning && (
           <div className="h-14 w-80 absolute right-0 top-20 z-50 text-center p-5 bg-red-800 font-mono text-md rounded-md">
             Item is already in the cart!
