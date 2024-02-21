@@ -1,5 +1,5 @@
 // import { Productdetails } from "./productdetails ";
-export const productList = [
+export const productData = [
   {
     id: 17383,
     name: "Jean shirt",

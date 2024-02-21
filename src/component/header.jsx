@@ -3,18 +3,20 @@ import React from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { ImBin } from "react-icons/im";
 import { Link } from "react-router-dom";
+import { CartContext } from "../contexts/CartProvider";
+import { useContext } from "react";
 
-export default function Header({
-  cart,
-  price,
-  setCart,
-  handleDecrement,
-  handleIncrement,
-  toggleSidebar,
-  isOpen,
-  toggleCheckout,
-  checkout,
-}) {
+export default function Header() {
+  const {
+    cart,
+    setCart,
+    totalPrice,
+    handleDecrement,
+    handleIncrement,
+    toggleSidebar,
+    isOpen,
+  } = useContext(CartContext);
+
   //delete function
   const handleDeleteItem = (id) => {
     const deleteArr = cart.filter((dItem) => dItem.id !== id);
@@ -105,13 +107,14 @@ export default function Header({
             ))}
           </div>
           <hr className="mx-auto max-w-56 "></hr>
-          <div className="text-right mr-10 py-3 text-lg">Total ${price}</div>
+          <div className="text-right mr-10 py-3 text-lg">
+            Total ${totalPrice}
+          </div>
           <Link
             to="/chechout"
-            onClick={() => toggleCheckout()}
             className="text-center mx-auto block bg-gray-700 w-32   py-2 hover:bg-gray-600 hover:text-gray-300 shadow hover:shadow-gray-500 transition-all duration-500 mt-3 rounded-3xl cursor-pointer"
           >
-            {!checkout ? "Show Product" : "Check Out"}
+            Check out
           </Link>
         </div>
       </div>
