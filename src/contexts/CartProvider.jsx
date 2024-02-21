@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { createContext } from "react";
+
 //getting cart from localstorate
 const cartFromLocalstorage = JSON.parse(
   localStorage.getItem("cartItems") || "[]"
@@ -16,7 +17,6 @@ export default function CartProvider({ children }) {
 
   const [warning, setWarning] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  // const [checkout, setChekOut] = useState(true);
 
   //toggle the side bar
   const toggleSidebar = () => {
@@ -66,11 +66,6 @@ export default function CartProvider({ children }) {
     setCart,
     toggleSidebar,
     isOpen,
-    // toggleCheckout={() => {
-    //   setChekOut(!checkout);
-    //   toggleSidebar();
-    // }}
-    // checkout={checkout},
     handleIncrement,
     handleDecrement,
     totalPrice,
