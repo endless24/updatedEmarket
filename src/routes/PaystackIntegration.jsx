@@ -93,7 +93,7 @@ export default function PaystackIntegration() {
                 <input
                   type="tel"
                   id="amount"
-                  value={totalPrice}
+                  value={`$${totalPrice}`}
                   required
                   readOnly
                   className="w-full py-2  bg-transparent border-gray-400 border-b outline-none"
