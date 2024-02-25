@@ -10,13 +10,13 @@ export const CartContext = createContext();
 
 export default function CartProvider({ children }) {
   const [cart, setCart] = useState(cartFromLocalstorage);
+  const [warning, setWarning] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
   //storing the cart to localstorage
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cart));
   }, [cart]);
-
-  const [warning, setWarning] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
 
   //toggle the side bar
   const toggleSidebar = () => {
@@ -24,7 +24,8 @@ export default function CartProvider({ children }) {
   };
   //function that add to cart when clicked
   const handleAddToCart = (item) => {
-    if (cart.some((cartItem) => cartItem.id === item.id)) {
+    const quantity = 1;
+    if (cart.find((cartItem) => cartItem.id === item.id)) {
       //display a message if it has been added to the cart
       setWarning(true);
       setTimeout(() => {
@@ -32,7 +33,10 @@ export default function CartProvider({ children }) {
       }, 2000);
       return;
     }
-    setCart([...cart, item]);
+    // Extract id, name, and price from the item
+    const { id, name, price, img } = item;
+    //add the extracted properties to cart
+    setCart([...cart, { id, name, price, img, quantity }]);
   };
   //function to decrement /increment quantity
   const handleDecrement = (cart_id) => {
@@ -54,11 +58,26 @@ export default function CartProvider({ children }) {
     );
   };
 
+  //calculating the total price of the item in the cart
   let totalPrice = 0;
   for (let index = 0; index < cart.length; index++) {
     const element = cart[index];
     totalPrice += element.quantity * element.price;
   }
+
+  //delete function
+  const handleDeleteItem = (id) => {
+    //getting a perticular item
+    const cartNameObj = cart.find((item) => item.id === id);
+    const deleteCart = confirm(
+      `Are you sure you want to delete this ${cartNameObj.name}?`
+    );
+    if (deleteCart) {
+      const deleteArr = cart.filter((dItem) => dItem.id !== id);
+      setCart(deleteArr);
+      alert("cart deleted successfully");
+    }
+  };
 
   //getting the props and functions that is needed in the components
   const value = {
@@ -70,6 +89,7 @@ export default function CartProvider({ children }) {
     handleDecrement,
     totalPrice,
     handleAddToCart,
+    handleDeleteItem,
   };
   return (
     <CartContext.Provider value={value}>

@@ -15,13 +15,8 @@ export default function Header() {
     handleIncrement,
     toggleSidebar,
     isOpen,
+    handleDeleteItem,
   } = useContext(CartContext);
-
-  //delete function
-  const handleDeleteItem = (id) => {
-    const deleteArr = cart.filter((dItem) => dItem.id !== id);
-    setCart(deleteArr);
-  };
 
   return (
     <div className="">
@@ -68,30 +63,30 @@ export default function Header() {
           </div>
           <div className="p-4  font-bold ">
             <p className="text-2xl text-center"> Your Cart ({cart.length})</p>
-            {cart.map((cartItems) => (
+            {cart.map((cartItem) => (
               <div
                 className="flex items-center w-full gap-4 my-4"
-                key={cartItems.id}
+                key={cartItem.id}
               >
                 <div className="flex-grow flex gap-4">
                   <div className="w-20 h-20 ">
-                    <img src={cartItems.img} alt="" className="rounded-md" />
+                    <img src={cartItem.img} alt="" className="rounded-md" />
                   </div>
                   <div className="  ">
-                    <p>{cartItems.name}</p>
-                    <p className="my-1">${cartItems.price}</p>
+                    <p>{cartItem.name}</p>
+                    <p className="my-1">${cartItem.price}</p>
                     <button
                       className="bg-gray-400 px-2 text-gray-200 "
-                      onClick={() => handleDecrement(cartItems.id)}
+                      onClick={() => handleDecrement(cartItem.id)}
                     >
                       -
                     </button>
                     <button className="w-8 bg-gray-700 text-center">
-                      {cartItems.quantity}
+                      {cartItem.quantity}
                     </button>
                     <button
                       className="bg-gray-400 px-2 text-gray-200"
-                      onClick={() => handleIncrement(cartItems.id)}
+                      onClick={() => handleIncrement(cartItem.id)}
                     >
                       +
                     </button>
@@ -100,7 +95,7 @@ export default function Header() {
                 <div className="col-span-1 text-red-600 ">
                   <ImBin
                     className="cursor-pointer "
-                    onClick={() => handleDeleteItem(cartItems.id)}
+                    onClick={() => handleDeleteItem(cartItem.id)}
                   />
                 </div>
               </div>
