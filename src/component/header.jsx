@@ -9,7 +9,7 @@ import { useContext } from "react";
 export default function Header() {
   const {
     cart,
-    setCart,
+    // setCart,
     totalPrice,
     handleDecrement,
     handleIncrement,
@@ -19,10 +19,10 @@ export default function Header() {
   } = useContext(CartContext);
 
   return (
-    <div className="">
-      <header className="  border-b-gray-700  border-b py-6 ">
-        <div className="grid md:grid-cols-2 sm:px-4 lg:p-0 grid-cols-1   max-w-6xl mx-auto ">
-          <div className="col-span-1 font-mono font-bold">
+    <div>
+      <header className="  border-b-gray-700  border-b py-6 fixed w-full z-50 bg-gray-900 ">
+        <div className="grid lg:grid-cols-2 sm:px-4 lg:p-0 grid-cols-1   max-w-6xl mx-auto ">
+          <div className="col-span-1 font-mono font-bold ">
             <strong>E-Commerce</strong>
           </div>
           <div className="col-span-1 relative select-none">
@@ -48,7 +48,7 @@ export default function Header() {
       <div className="flex">
         {/* Sidebar */}
         <div
-          className={`fixed top-0 right-0 w-72 h-full bg-gray-800 transform z-20 ${
+          className={`fixed top-16 right-0 w-72 h-full bg-gray-800 transform z-20 ${
             isOpen ? "translate-x-0" : "translate-x-full"
           } transition-transform duration-500 ease-in-out`}
         >

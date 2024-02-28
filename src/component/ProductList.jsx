@@ -10,7 +10,11 @@ export function ProductList({ productObj }) {
       className="col-span-1 bg-gray-800 p-3 rounded-md shadow drop-shadow-lg transition-all duration-500 hover:shadow-slate-400 "
       key={productObj.id}
     >
-      <img src={productObj.img} alt={productObj.name} className="rounded-md " />
+      <img
+        src={productObj.img}
+        alt={productObj.name}
+        className="rounded-md w-full"
+      />
       <div className="py-5 font-bold text-base uppercase">
         {productObj.name}
       </div>

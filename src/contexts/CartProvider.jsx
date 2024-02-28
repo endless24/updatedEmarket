@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { createContext } from "react";
+import { productData } from "../productData";
 
 //getting cart from localstorate
 const cartFromLocalstorage = JSON.parse(
@@ -22,6 +23,7 @@ export default function CartProvider({ children }) {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+
   //function that add to cart when clicked
   const handleAddToCart = (item) => {
     const quantity = 1;
@@ -33,10 +35,12 @@ export default function CartProvider({ children }) {
       }, 2000);
       return;
     }
-    // Extract id, name, and price from the item
-    const { id, name, price, img } = item;
-    //add the extracted properties to cart
-    setCart([...cart, { id, name, price, img, quantity }]);
+    // checking if cart id match the product id
+    productData.find((product) => {
+      if (product.id === item.id) {
+        setCart([...cart, { id: item.id, quantity, ...product }]);
+      }
+    });
   };
   //function to decrement /increment quantity
   const handleDecrement = (cart_id) => {
@@ -90,6 +94,7 @@ export default function CartProvider({ children }) {
     totalPrice,
     handleAddToCart,
     handleDeleteItem,
+    productData,
   };
   return (
     <CartContext.Provider value={value}>
