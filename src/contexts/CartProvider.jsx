@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { createContext } from "react";
-import { productData } from "../productData";
+import { ProductContext } from "./ProdProvider";
 
 //getting cart from localstorate
 const cartFromLocalstorage = JSON.parse(
@@ -11,8 +11,9 @@ export const CartContext = createContext();
 
 export default function CartProvider({ children }) {
   const [cart, setCart] = useState(cartFromLocalstorage);
-  const [warning, setWarning] = useState(false);
+  // const [warning, setWarning] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { filterProduct, products } = useContext(ProductContext);
 
   //storing the cart to localstorage
   useEffect(() => {
@@ -28,19 +29,16 @@ export default function CartProvider({ children }) {
   const handleAddToCart = (item) => {
     const quantity = 1;
     if (cart.find((cartItem) => cartItem.id === item.id)) {
+      handleIncrement(item.id);
       //display a message if it has been added to the cart
-      setWarning(true);
-      setTimeout(() => {
-        setWarning(false);
-      }, 2000);
+      // setWarning(true);
+      // setTimeout(() => {
+      //   setWarning(false);
+      // }, 2000);
       return;
     }
-    // checking if cart id match the product id
-    productData.find((product) => {
-      if (product.id === item.id) {
-        setCart([...cart, { id: item.id, quantity, ...product }]);
-      }
-    });
+    const { id, price } = item;
+    setCart([...cart, { id, price, quantity }]);
   };
   //function to decrement /increment quantity
   const handleDecrement = (cart_id) => {
@@ -66,6 +64,9 @@ export default function CartProvider({ children }) {
   let totalPrice = 0;
   for (let index = 0; index < cart.length; index++) {
     const element = cart[index];
+    const soldOutItem = products.find((p) => p.id === element.id);
+    console.log(soldOutItem);
+    if (soldOutItem.soldOut) continue;
     totalPrice += element.quantity * element.price;
   }
 
@@ -83,6 +84,14 @@ export default function CartProvider({ children }) {
     }
   };
 
+  const handleDelAllCart = () => {
+    const deleteAllCart = confirm(" Are you sure you want to clear the cart");
+    if (deleteAllCart) {
+      setCart([]);
+      alert("Cart cleared successfully");
+    }
+  };
+
   //getting the props and functions that is needed in the components
   const value = {
     cart,
@@ -94,16 +103,16 @@ export default function CartProvider({ children }) {
     totalPrice,
     handleAddToCart,
     handleDeleteItem,
-    productData,
+    handleDelAllCart,
   };
   return (
     <CartContext.Provider value={value}>
       {children}
-      {warning && (
+      {/* {warning && (
         <div className="h-14 w-80 absolute right-0 top-20 z-50 text-center p-5 bg-red-800 font-mono text-md rounded-md">
           Item is already in the cart!
         </div>
-      )}
+      )} */}
     </CartContext.Provider>
   );
 }

@@ -2,20 +2,25 @@ import { useState, useContext } from "react";
 import paystackPop from "@paystack/inline-js";
 import { CartContext } from "../contexts/CartProvider";
 import { Link } from "react-router-dom";
+import { ProductContext } from "../contexts/ProdProvider";
 
 export default function PaystackIntegration() {
+  //destructured cart
   const { cart, setCart } = useContext(CartContext);
+  //destructure productData
+  const { products } = useContext(ProductContext);
+
   const [email, setEmail] = useState("");
   // const [amount, setAmount] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  let totalPrice = 0;
-  for (let index = 0; index < cart.length; index++) {
-    const element = cart[index];
-    totalPrice += element.quantity * element.price;
-  }
-
+  // let totalPrice = 0;
+  // for (let index = 0; index < cart.length; index++) {
+  //   const element = cart[index];
+  //   totalPrice += element.quantity * element.price;
+  // }
+  const { totalPrice } = useContext(CartContext);
   const payWithPaystack = (e) => {
     e.preventDefault();
     const paystack = new paystackPop();
@@ -41,6 +46,29 @@ export default function PaystackIntegration() {
     });
   };
 
+  //checkout function
+  const checkOutCart = () => {
+    return cart.map((cartItems) => {
+      const product = products.find((p) => p.id === cartItems.id);
+
+      return product.soldOut ? (
+        ""
+      ) : (
+        <div className="  my-4" key={cartItems.id}>
+          <div className="flex-grow flex gap-4">
+            <div className="w-12 h-12 ">
+              <img src={product.img} alt="" className="rounded-md" />
+            </div>
+            <div className="  ">
+              <p>{product.name}</p>
+              <p className="my-1">${cartItems.price}</p>
+            </div>
+          </div>
+        </div>
+      );
+    });
+  };
+
   return (
     <div>
       <h3 className="bg-blue-700 text-center p-3 text-3xl">Make Payment</h3>
@@ -51,19 +79,8 @@ export default function PaystackIntegration() {
           </h2>
           <div className="flex flex-col h-2/3">
             <div className="grid grid-cols-2 flex-grow">
-              {cart.map((cartItems) => (
-                <div className="  my-4" key={cartItems.id}>
-                  <div className="flex-grow flex gap-4">
-                    <div className="w-12 h-12 ">
-                      <img src={cartItems.img} alt="" className="rounded-md" />
-                    </div>
-                    <div className="  ">
-                      <p>{cartItems.name}</p>
-                      <p className="my-1">${cartItems.price}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              {/* calling checkout function */}
+              {checkOutCart()}
             </div>
             <Link
               to="/"

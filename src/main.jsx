@@ -6,6 +6,7 @@ import Root from "./routes/root";
 import ErrorPage from "./error-page";
 import CartProvider from "./contexts/CartProvider";
 import PaystackIntegration from "./routes/PaystackIntegration";
+import ProdProvider from "./contexts/ProdProvider";
 
 const router = createBrowserRouter([
   {
@@ -21,8 +22,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <CartProvider>
-      <RouterProvider router={router} />
-    </CartProvider>
+    <ProdProvider>
+      <CartProvider>
+        <RouterProvider router={router} />
+      </CartProvider>
+    </ProdProvider>
   </React.StrictMode>
 );

@@ -3,7 +3,7 @@ import React from "react";
 import Header from "../component/header";
 import Product from "../component/products";
 
-const Root = () => {
+export default function Root() {
   return (
     <>
       <div className="text-gray-400 bg-gray-900 select-none">
@@ -12,6 +12,4 @@ const Root = () => {
       </div>
     </>
   );
-};
-
-export default Root;
+}
