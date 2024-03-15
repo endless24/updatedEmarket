@@ -3,15 +3,18 @@ import "../index.css";
 import { FaShoppingCart } from "react-icons/fa";
 import { useContext } from "react";
 import { CartContext } from "../contexts/CartProvider";
+// import { ProductContext } from "../contexts/ProdProvider";
 
 export function ProductList({ productObj }) {
+  // const { query } = useContext(ProductContext);
+  // console.log(query);
   const { handleAddToCart } = useContext(CartContext);
 
   //product function
   const product = () => {
     return (
       <div
-        className="col-span-1  p-3 rounded-md bg-gray-800 shadow drop-shadow-lg hover:translate-y-2 duration-500 hover:shadow-gray-500"
+        className="col-span-1  p-3 rounded-md bg-gray-900 shadow drop-shadow-lg hover:translate-y-2 duration-500 hover:shadow-gray-500"
         key={productObj.id}
       >
         <img

@@ -13,7 +13,8 @@ export default function CartProvider({ children }) {
   const [cart, setCart] = useState(cartFromLocalstorage);
   // const [warning, setWarning] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const { filterProduct, products } = useContext(ProductContext);
+  const [toggleMenu, setToggleMenu] = useState(false);
+  const { products } = useContext(ProductContext);
 
   //storing the cart to localstorage
   useEffect(() => {
@@ -23,6 +24,18 @@ export default function CartProvider({ children }) {
   //toggle the side bar
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
+    if (toggleMenu) {
+      toggleMenubar();
+    }
+    // console.log(isOpen);
+  };
+  //Toggle menu
+  const toggleMenubar = () => {
+    setToggleMenu(!toggleMenu);
+    if (isOpen) {
+      toggleSidebar();
+    }
+    // console.log(toggleMenu);
   };
 
   //function that add to cart when clicked
@@ -65,7 +78,7 @@ export default function CartProvider({ children }) {
   for (let index = 0; index < cart.length; index++) {
     const element = cart[index];
     const soldOutItem = products.find((p) => p.id === element.id);
-    console.log(soldOutItem);
+    // console.log(soldOutItem);
     if (soldOutItem.soldOut) continue;
     totalPrice += element.quantity * element.price;
   }
@@ -104,6 +117,8 @@ export default function CartProvider({ children }) {
     handleAddToCart,
     handleDeleteItem,
     handleDelAllCart,
+    toggleMenubar,
+    toggleMenu,
   };
   return (
     <CartContext.Provider value={value}>

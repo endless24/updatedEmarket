@@ -7,6 +7,8 @@ import ErrorPage from "./error-page";
 import CartProvider from "./contexts/CartProvider";
 import PaystackIntegration from "./routes/PaystackIntegration";
 import ProdProvider from "./contexts/ProdProvider";
+import About from "./routes/About";
+import Contact from "./routes/Contact";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,14 @@ const router = createBrowserRouter([
   {
     path: "/chechout",
     element: <PaystackIntegration />,
+  },
+  {
+    path: "/about",
+    element: <About />,
+  },
+  {
+    path: "/contact",
+    element: <Contact />,
   },
 ]);
 
