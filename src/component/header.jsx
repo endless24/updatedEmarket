@@ -10,7 +10,7 @@ import { FaBars } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 
 export default function Header() {
-  const { products, query, setQuery, handleQuery } = useContext(ProductContext);
+  const { products, query, setQuery } = useContext(ProductContext);
   // console.log(filterProduct);
   const {
     cart,
